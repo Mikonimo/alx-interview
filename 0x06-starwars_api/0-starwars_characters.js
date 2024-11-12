@@ -7,7 +7,7 @@ const process = require('process');
 const movieId = process.argv[2];
 
 if (!movieId) {
-  console.error("Usage: ./0-starwars_characters.js <Movie ID>");
+  console.error('Usage: ./0-starwars_characters.js <Movie ID>');
   process.exit(1);
 }
 
@@ -29,5 +29,5 @@ axios.get(url)
     });
   })
   .catch(error => {
-    console.error("Error fetching data:", error.message);
+    console.error('Error fetching data:', error.message);
   });
