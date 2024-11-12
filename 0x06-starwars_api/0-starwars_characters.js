@@ -12,7 +12,7 @@ if (!movieId) {
 }
 
 // URL for the Star Wars API films endpoint
-const url = `https://swapi.dev/api/films/${movieId}/`;
+const url = `https://swapi-api.alx-tools.com/api/films/${movieId}/`;
 
 // Fetch the movie details
 axios.get(url)
