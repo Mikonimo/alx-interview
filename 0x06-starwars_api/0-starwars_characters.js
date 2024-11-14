@@ -1,33 +1,28 @@
 #!/usr/bin/node
 
-const axios = require('axios');
-const process = require('process');
-
-// Get the Movie ID from the command line arguments
-const movieId = process.argv[2];
-
-if (!movieId) {
-  console.error('Usage: ./0-starwars_characters.js <Movie ID>');
-  process.exit(1);
+function makeRequest (url) {
+  const request = require('request');
+  return new Promise((resolve, reject) => {
+    request.get(url, (error, response, body) => {
+      if (error) reject(error);
+      else resolve(JSON.parse(body));
+    });
+  });
 }
 
-// URL for the Star Wars API films endpoint
-const url = `https://swapi-api.alx-tools.com/api/films/${movieId}/`;
+async function main () {
+  const args = process.argv;
 
-// Fetch the movie details
-axios.get(url)
-  .then(response => {
-    const characters = response.data.characters;
-    const characterPromises = characters.map(characterUrl => axios.get(characterUrl));
+  if (args.length < 3) return;
 
-    // Fetch all character names in order
-    return Promise.all(characterPromises);
-  })
-  .then(responses => {
-    responses.forEach(response => {
-      console.log(response.data.name);
-    });
-  })
-  .catch(error => {
-    console.error('Error fetching data:', error.message);
-  });
+  const movieUrl = 'https://swapi-api.alx-tools.com/api/films/' + args[2];
+  const movie = await makeRequest(movieUrl);
+
+  if (movie.characters === undefined) return;
+  for (const characterUrl of movie.characters) {
+    const character = await makeRequest(characterUrl);
+    console.log(character.name);
+  }
+}
+
+main();
