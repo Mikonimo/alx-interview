@@ -4,6 +4,17 @@ questions"""
 
 
 def isWinner(x, nums):
+    """Determines the winner of the Prime Game
+
+    Args:
+        x (int): number of rounds
+        num (list): array of n values for each round
+
+    Returns:
+        str: "Maria" if Maria wins more rounds,
+            "Ben" if Ben wins more rounds
+            None if a tie
+    """
     if x < 1 or not nums:
         return None
 
